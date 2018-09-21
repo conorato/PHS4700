@@ -1,5 +1,9 @@
 classdef (Abstract) PlanePart
-    methods
-        pcm = calculateMassCenter(posA)
+    properties
+       mass
+       massCenterPosition
+    end
+    methods(Static)
+        massCenterPosition = calculateMassCenter()
     end
 end
