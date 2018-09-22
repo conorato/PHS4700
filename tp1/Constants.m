@@ -8,7 +8,7 @@ classdef Constants
        BODY_RADIUS      = 1.345     % [m]
        BODY_LENGTH      = 22.95     % [m]
 
-       WING_MASS        = 3250      % [kg]
+       WING_MASS        = 3250      % [kg]m
        WING_THICKNESS   = 0.25      % [m]
        WING_LENGTH      = 10.6      % [m]
        WING_WIDTH       = 1.14      % [m]
