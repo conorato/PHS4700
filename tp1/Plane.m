@@ -5,16 +5,6 @@ classdef Plane
     end
     methods
         function obj = Plane()
-            obj.parts = [
-                Cockpit()
-                Body()
-                Wing(PartPosition.Left)
-                Wing(PartPosition.Right)
-                Fin()
-                Reactor(PartPosition.Left)
-                Reactor(PartPosition.Right)
-            ];
-            obj.massCenterPosition = calculateMassCenter();
             obj.parts = Cockpit.empty();
             obj.parts(end + 1) = Cockpit();
             obj.parts(end + 1) = Body();
@@ -37,8 +27,8 @@ classdef Plane
         end
     end
     
-    methods(Static)
-        function massCenterPosition = calculateMassCenter()
+    methods
+        function massCenterPosition = calculateMassCenter(obj)
             sumOfWeightedMassCenters = 0;
             for idx = 1:numel(obj.parts)
                 part = obj.parts(idx);
