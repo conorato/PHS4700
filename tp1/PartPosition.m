@@ -1,5 +1,6 @@
-classdef PartPosition
+classdef PartPosition < single
    enumeration
-      Left, Right
+      Left  (1),
+      Right (-1)
    end
 end

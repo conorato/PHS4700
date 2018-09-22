@@ -9,6 +9,11 @@ classdef Constants
        BODY_LENGTH      = 22.95     % [m]
 
        WING_MASS        = 3250      % [kg]
+       WING_THICKNESS   = 0.25      % [m]
+       WING_LENGTH      = 10.6      % [m]
+       WING_WIDTH       = 1.14      % [m]
+       WING_X_CENTER_OFFSET    = 10.54     % [m]
+       
        FIN_MASS         = 500       % [kg]
        REACTOR_MASS     = 1700      % [kg]
    end
