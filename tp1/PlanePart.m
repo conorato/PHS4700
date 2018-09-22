@@ -1,4 +1,4 @@
-classdef (Abstract) PlanePart
+classdef (Abstract) PlanePart < matlab.mixin.Heterogeneous
     properties
        mass
        massCenterPosition
