@@ -5,7 +5,6 @@ classdef Plane
     end
     methods
         function obj = Plane()
-<<<<<<< HEAD
             obj.parts = [
                 Cockpit()
                 Body()
@@ -16,7 +15,6 @@ classdef Plane
                 Reactor(PartPosition.Right)
             ];
             obj.massCenterPosition = calculateMassCenter();
-=======
             obj.parts = Cockpit.empty();
             obj.parts(end + 1) = Cockpit();
             obj.parts(end + 1) = Body();
@@ -26,7 +24,6 @@ classdef Plane
             obj.parts(end + 1) = Reactor(PartPosition.Left);
             obj.parts(end + 1) = Reactor(PartPosition.Right);
             obj.massCenterPosition = obj.calculateMassCenter();
->>>>>>> dd2b0a045146a34fd40cc90d315f04b24bf5e7ac
         end
     end
     
