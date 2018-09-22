@@ -19,9 +19,10 @@ classdef Plane
     
     methods(Static)
         function  localPosA = calculateLocalPosA()
-            z = BODY_RADIUS + WING_THICKNESS;
+            
+            z = Constants.BODY_RADIUS + Constants.WING_THICKNESS;
             y = 0;
-            x = BODY_LENGTH + COCKPIT_LENGTH;
+            x = Constants.BODY_LENGTH + Constants.COCKPIT_LENGTH;
             
             localPosA = [x; y; z];
         end
@@ -38,11 +39,11 @@ classdef Plane
         end
     end
     
-    methods(Static)
-        function globalPCM = calculatePCMGlobalPosition(posA, ar)
-            localPosA = calculateLocalPosA();
+    methods
+        function globalPCM = calculateGlobalPCM(obj, posA, ar)
+            localPosA = obj.calculateLocalPosA();
             localOrigin = [posA(1)- localPosA(1); posA(2)- localPosA(2); posA(3)- localPosA(3)];
-            centeredPCM = calculateMassCenter() + localOrigin - posA;
+            centeredPCM = obj.massCenterPosition + localOrigin - posA;
             
             rotationMatrix = [cos(ar), 0, sin(ar); 0, 1, 0; -sin(ar), 0, cos(ar)];
             
