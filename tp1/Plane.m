@@ -5,7 +5,7 @@ classdef Plane
     end
     methods
         function obj = Plane()
-            obj.parts = Cockpit.empty();
+            obj.parts = PlanePart.empty();
             obj.parts(end + 1) = Cockpit();
             obj.parts(end + 1) = Body();
             obj.parts(end + 1) = Wing(PartPosition.Left);
