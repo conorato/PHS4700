@@ -4,17 +4,16 @@ classdef Plane
         massCenterPosition
     end
     methods
-        function obj = Plane(posA)
-            obj.parts = [
-                Cockpit(posA)
-                Body(posA)
-                Wing(posA, PartPosition.Left)
-                Wing(posA, PartPosition.Right)
-                Fin(posA)
-                Reactor(posA, PartPosition.Left)
-                Reactor(posA, PartPosition.Right)
-            ];
-            obj.massCenterPosition = calculateMassCenter();
+        function obj = Plane()
+            obj.parts = Cockpit.empty();
+            obj.parts(end + 1) = Cockpit();
+            obj.parts(end + 1) = Body();
+            obj.parts(end + 1) = Wing(PartPosition.Left);
+            obj.parts(end + 1) = Wing(PartPosition.Right);
+            obj.parts(end + 1) = Fin();
+            obj.parts(end + 1) = Reactor(PartPosition.Left);
+            obj.parts(end + 1) = Reactor(PartPosition.Right);
+            obj.massCenterPosition = obj.calculateMassCenter();
         end
     end
     methods(Static)
@@ -27,16 +26,13 @@ classdef Plane
         end
     end
     methods
-        function massCenterPosition = calculateMassCenter()
+        function massCenterPosition = calculateMassCenter(obj)
             sumOfWeightedMassCenters = 0;
             for idx = 1:numel(obj.parts)
                 part = obj.parts(idx);
-                sumOfWeightedMassCenters = part.mass * part.massCenterPosition;
+                sumOfWeightedMassCenters = sumOfWeightedMassCenters + (part.mass * part.massCenterPosition);
             end
-            massCenterPosition = sumOfWeightedMassCenters / sum(vertcat(obj.parts.mass())); %arrayfun(@(part) part.getMass(), obj.parts)
+            massCenterPosition = sumOfWeightedMassCenters ./ sum(arrayfun(@(part) part.mass, obj.parts));
         end
-    end
-    methods
-        function 
     end
 end
