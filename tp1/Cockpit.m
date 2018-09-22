@@ -10,7 +10,7 @@ classdef Cockpit < PlanePart
             xMassCenter = Constants.COCKPIT_LENGTH/4 + Constants.BODY_LENGTH;
             yMassCenter = 0;
             zMassCenter = Constants.COCKPIT_RADIUS + Constants.WING_THICKNESS;
-            massCenterPosition = [xMassCenter yMassCenter zMassCenter];
+            massCenterPosition = [xMassCenter; yMassCenter; zMassCenter];
         end
     end
 end

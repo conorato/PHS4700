@@ -14,7 +14,7 @@ classdef Wing < PlanePart
             xMassCenter = Constants.WING_X_CENTER_OFFSET;
             yMassCenter = obj.partPosition * Constants.WING_LENGTH/2;
             zMassCenter = Constants.WING_THICKNESS/2;
-            massCenterPosition = [xMassCenter yMassCenter zMassCenter];
+            massCenterPosition = [xMassCenter; yMassCenter; zMassCenter];
         end
     end
 end

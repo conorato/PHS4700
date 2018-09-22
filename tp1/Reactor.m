@@ -14,7 +14,7 @@ classdef Reactor < PlanePart
             xMassCenter = Constants.REACTOR_X_CENTER_OFFSET;
             yMassCenter = obj.partPosition * (Constants.BODY_RADIUS + Constants.REACTOR_RADIUS);
             zMassCenter = Constants.BODY_RADIUS + Constants.WING_THICKNESS;
-            massCenterPosition = [xMassCenter yMassCenter zMassCenter];
+            massCenterPosition = [xMassCenter; yMassCenter; zMassCenter];
         end
     end
 end
