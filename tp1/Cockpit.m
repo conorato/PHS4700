@@ -3,7 +3,7 @@ classdef Cockpit < PlanePart
         function obj = Cockpit()
             obj.mass = Constants.COCKPIT_MASS;
             obj.massCenterPosition = obj.calculateMassCenter();
-            obj.momentOfInertiaMatrix = obj.getIMatrix();
+            obj.momentOfInertiaMatrix = obj.calculateMomentOfInertia();
         end
     end
     methods(Static)
@@ -15,14 +15,15 @@ classdef Cockpit < PlanePart
         end
     end
     methods
-        function momentOfInertiaMatrix = getIMatrix(obj)
+        function momentOfInertiaMatrix = calculateMomentOfInertia(obj)
             radius = Constants.COCKPIT_RADIUS;
             height = Constants.COCKPIT_LENGTH;
-            mass =   Constants.COCKPIT_MASS;
-            
-            momentOfInertiaMatrix = mass*[(12*radius^2+3*height^2)/80, 0, 0;
-                                            0,(12*radius^2+3*height^2)/80, 0;
-                                            0, 0, 3/10*radius^2];
+            Ix = (3*radius^2)/10;
+            Iy = (12*radius^2+3*height^2)/80;
+            Iz = (12*radius^2+3*height^2)/80;
+            momentOfInertiaMatrix = obj.mass* [Ix, 0, 0;
+                                               0, Iy, 0;
+                                               0, 0, Iz];
         end
     end
 end

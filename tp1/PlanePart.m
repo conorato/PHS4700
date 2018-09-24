@@ -7,4 +7,7 @@ classdef (Abstract) PlanePart < matlab.mixin.Heterogeneous
     methods(Static)
         massCenterPosition = calculateMassCenter()
     end
+    methods
+        momentOfInertiaMatrix = calculateMomentOfInertia(obj)
+    end
 end
