@@ -1,6 +1,7 @@
 classdef Plane
     properties
         parts
+        mass
         massCenterPosition
     end
     methods
@@ -13,6 +14,7 @@ classdef Plane
             obj.parts(end + 1) = Fin();
             obj.parts(end + 1) = Reactor(PartPosition.Left);
             obj.parts(end + 1) = Reactor(PartPosition.Right);
+            obj.mass = sum(arrayfun(@(part) part.mass, obj.parts));
             obj.massCenterPosition = obj.calculateMassCenter();
         end
     end
@@ -35,11 +37,9 @@ classdef Plane
                 part = obj.parts(idx);
                 sumOfWeightedMassCenters = sumOfWeightedMassCenters + (part.mass * part.massCenterPosition);
             end
-            massCenterPosition = sumOfWeightedMassCenters ./ sum(arrayfun(@(part) part.mass, obj.parts));
+            massCenterPosition = sumOfWeightedMassCenters ./ obj.mass;
         end
-    end
-    
-    methods
+        
         function globalPCM = calculateGlobalPCM(obj, posA, ar)
             localPosA = obj.calculateLocalPosA();
             localOrigin = [posA(1)- localPosA(1); posA(2)- localPosA(2); posA(3)- localPosA(3)];
@@ -48,6 +48,10 @@ classdef Plane
             rotationMatrix = [cos(ar), 0, sin(ar); 0, 1, 0; -sin(ar), 0, cos(ar)];
             
             globalPCM = rotationMatrix * centeredPCM + posA;
+        end
+        
+        function momentOfInertia = calculateMomentOfInertia(obj)
+            
         end
     end
 end
