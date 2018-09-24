@@ -28,6 +28,10 @@ classdef Plane
             
             localPosA = [x; y; z];
         end
+        
+        function translationMatrix = calculateTranslationMatrix(partCMtoPlaneCM)
+            
+        end
     end
     
     methods
@@ -45,13 +49,19 @@ classdef Plane
             localOrigin = [posA(1)- localPosA(1); posA(2)- localPosA(2); posA(3)- localPosA(3)];
             centeredPCM = obj.massCenterPosition + localOrigin - posA;
             
-            rotationMatrix = [cos(ar), 0, sin(ar); 0, 1, 0; -sin(ar), 0, cos(ar)];
+            rotationMatrix = [cos(ar), 0, -sin(ar); 0, 1, 0; sin(ar), 0, cos(ar)];
             
             globalPCM = rotationMatrix * centeredPCM + posA;
         end
         
         function momentOfInertia = calculateMomentOfInertia(obj)
-            
+            for idx = 1:numel(obj.parts)
+                part = obj.parts(idx);
+               % translate local moment of inertia to the system PCM 
+               % 1. Calculate vector of plane CM - part CM
+               partCMtoPlaneCM = obj.massCenterPosition  - part.massCenterPosition;
+               translationMatrix = calculateTranslationMatrix(partCMtoPlaneCM);
+            end
         end
     end
 end
