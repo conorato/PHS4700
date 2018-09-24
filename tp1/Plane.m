@@ -49,7 +49,7 @@ classdef Plane
             localOrigin = [posA(1)- localPosA(1); posA(2)- localPosA(2); posA(3)- localPosA(3)];
             centeredPCM = obj.massCenterPosition + localOrigin - posA;
             
-            rotationMatrix = [cos(ar), 0, -sin(ar); 0, 1, 0; sin(ar), 0, cos(ar)];
+            rotationMatrix = [cos(ar), 0, sin(ar); 0, 1, 0; -sin(ar), 0, cos(ar)];
             
             globalPCM = rotationMatrix * centeredPCM + posA;
         end
