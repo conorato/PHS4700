@@ -3,6 +3,7 @@ classdef Plane
         parts
         mass
         massCenterPosition
+        momentOfInertia
     end
     methods
         function obj = Plane()
@@ -16,6 +17,7 @@ classdef Plane
             obj.parts(end + 1) = Reactor(PartPosition.Right);
             obj.mass = sum(arrayfun(@(part) part.mass, obj.parts));
             obj.massCenterPosition = obj.calculateMassCenter();
+            obj.momentOfInertia = obj.calculateMomentOfInertia();
         end
     end
     
@@ -71,6 +73,26 @@ classdef Plane
                planeMomentOfInertia = partMomentOfInertiaTranslated + planeMomentOfInertia;
             end
             momentOfInertia = planeMomentOfInertia;
+        end 
+        function planeTorque = calculateTorque(obj, ar, Forces)
+            forceMd = [Forces(1); 0; 0];
+            forceMg = [Forces(2); 0; 0];
+            forceP  = [Forces(3)* sin(ar); 0; Forces(3)* cos(ar)];
+            positionForceMd = [Constants.REACTOR_X_CENTER_OFFSET-Constants.REACTOR_LENGTH/2;PartPosition.Right * (Constants.REACTOR_RADIUS+Constants.BODY_RADIUS);Constants.BODY_RADIUS+Constants.WING_THICKNESS];
+            positionForceMg = [Constants.REACTOR_X_CENTER_OFFSET-Constants.REACTOR_LENGTH/2;PartPosition.Left * (Constants.REACTOR_RADIUS+Constants.BODY_RADIUS);Constants.BODY_RADIUS+Constants.WING_THICKNESS];
+            positionForceP  = [10.54; 0; 0];
+            radiusForceMd = positionForceMd - obj.massCenterPosition;
+            radiusForceMg = positionForceMg - obj.massCenterPosition;
+            radiusForceP = positionForceP - obj.massCenterPosition;
+            torqueMd = cross(radiusForceMd, forceMd);
+            torqueMg = cross(radiusForceMg, forceMg);
+            torqueP  = cross(radiusForceP, forceP);
+            planeTorque = torqueP + torqueMg + torqueMd;
         end
-    end
+        function angularAcceleration = calculateAngularAcceleration(obj, MI, ar, va, Forces)
+            planeTorque = obj.calculateTorque(ar, Forces);
+            momentCinetique = MI * va;
+            angularAcceleration = MI\(planeTorque - cross(va, momentCinetique));
+        end
+    end 
 end
