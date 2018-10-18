@@ -1,8 +1,8 @@
-function force = DragForce( velocity )
+function dragForce = dragForce( velocity )
     area = pi * Constants.BALL_RADIUS^2;
     dragCoefficient = calculateDragCoefficient(norm(velocity));
     
-    force = -area * Constants.AIR_DENSITY * dragCoefficient * velocity;
+    dragForce = -area * Constants.AIR_DENSITY * dragCoefficient * velocity;
 end
 
 function coefficient = calculateDragCoefficient(speed)
