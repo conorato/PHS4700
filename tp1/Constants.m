@@ -23,5 +23,7 @@ classdef Constants
        REACTOR_RADIUS           = 0.724     % [m]
        REACTOR_LENGTH           = 3.68      % [m]
        REACTOR_X_CENTER_OFFSET  = 5         % [m]
+       
+       GRAVITY                  = 9.81      % [N/kg]
    end
 end
