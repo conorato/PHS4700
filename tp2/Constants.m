@@ -19,5 +19,14 @@ classdef Constants
         MAX_Y           = 90 - Constants.BALL_RADIUS;       % [m]
         
         MIN_Z           = 0 + Constants.BALL_RADIUS;        % [m]
+
+        % bottom left post
+        POST1           = [1, 2]                         % [posX, posY]
+        % top left post
+        POST2           = [1, 2]                         % [posX, posY]
+        % bottom right post 
+        POST3           = [1, 2]                         % [posX, posY]
+        % top right post
+        POST4           = [1, 2]                         % [posX, posY]
     end
 end
