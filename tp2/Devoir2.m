@@ -1,15 +1,12 @@
-function [ But tf rf vf ] = Devoir2( ri, vi, wi )
+function [ But, tf, rf, vf ] = Devoir2( ri, vi, wi )
     time = 0;
-    
-    correctError(ri, time);
+    rf = simulateTrajectory(ri, vi, wi, Constants.DELTA_T, time)
 end
 
 
 function rf = simulateTrajectory(ri, vi, wi, deltaT, time) 
-    
     while(true)
-        %todo: contraintes a respecter a implementer
-        if(isOutOfField(ri))
+        if(areConstraintsBroken(ri))
             break;
         end
         vi = calculateNewVelocity(vi, wi, deltaT);
@@ -17,4 +14,8 @@ function rf = simulateTrajectory(ri, vi, wi, deltaT, time)
         time = time + deltaT;
     end
     rf = ri;
+end
+
+function areConstraintsBroken = areConstraintsBroken(ri)
+    areConstraintsBroken = Helper.touchesGround(ri);
 end

@@ -3,7 +3,7 @@ function forceM = magnusForce(v, w)
     speed = norm(v);
     crossProduct = cross(w,v);
     crossProductNorm =  norm(crossProduct);
-    if  (crossProductNorm ~= 0);
+    if  (crossProductNorm ~= 0)
         forceM = Constants.AIR_DENSITY * magnusCoefficient * Constants.BALL_AREA * speed^2 * crossProduct /crossProductNorm;
     else
         forceM = [0;0;0];
