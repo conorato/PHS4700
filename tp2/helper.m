@@ -1,3 +1,4 @@
+% Returns distance between 2 points in 2 dimensions.
 function d = getDistance(x1, x2, y1, y2)
    d = sqrt((x1 - x2).^2 + (y1 - y2).^2);
 end
@@ -58,6 +59,7 @@ function res = isFreeThrow(ri)
          ri.y >= Constants.MAX_Y + Constants.BALL_RADIUS;
 end
 
+% Returns whether or not the ball is behind the goal line without behing a goal.
 function res = isGoalKick(ri)
    res = !isGoal(ri) &&
          ri.x <= Constants.MIN_X - Constants.BALL_RADIUS || ri.x >= Constants.MAX_X + Constants.BALL_RADIUS
