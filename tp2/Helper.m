@@ -49,10 +49,10 @@ classdef Helper
 
         % Returns whether or not the ball is out the sides of the pitch.
         function res = isFreeThrow(ri)
-           res = ri(2) <= Constants.MIN_Y - Constants.BALL_RADIUS || ri(2) >= Constants.MAX_Y + Constants.BALL_RADIUS;
+           res = ri(2) < Constants.MIN_Y || ri(2) > Constants.MAX_Y;
         end
 
-        % Returns whether or not the ball is behind the goal line without behing a goal.
+        % Returns whether or not the ball is behind the goal line without being a goal.
         function res = isGoalKick(ri)
            res = ~isGoal(ri) && ri(1) <= Constants.MIN_X - Constants.BALL_RADIUS || ri(1) >= Constants.MAX_X + Constants.BALL_RADIUS;
         end

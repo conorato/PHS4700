@@ -17,8 +17,8 @@ classdef Constants
         MIN_X           = 0 + Constants.BALL_RADIUS;        % [m]
         MAX_X           = 120 - Constants.BALL_RADIUS;      % [m]
         
-        MIN_Y           = 0 + Constants.BALL_RADIUS;        % [m]
-        MAX_Y           = 90 - Constants.BALL_RADIUS;       % [m]
+        MIN_Y           = 0;                                % [m]
+        MAX_Y           = 90;                               % [m]
         
         MIN_Z           = 0 + Constants.BALL_RADIUS;        % [m]
 
