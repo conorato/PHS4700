@@ -43,8 +43,8 @@ function [lastPosition, nextPosition, lastVelocity, nextVelocity, time] = simula
         Display.drawLine(lastPosition, nextPosition);
         lastPosition = nextPosition;
         lastVelocity = nextVelocity;
-        nextVelocity = calculateNewVelocity(lastVelocity, wi, deltaT);
-        nextPosition = getPosition(lastPosition, nextVelocity, deltaT);
+        nextVelocity = Cinematic.getVelocity(lastVelocity, wi, deltaT);
+        nextPosition = Cinematic.getPosition(lastPosition, nextVelocity, deltaT);
         time = time + deltaT;
     end
 end

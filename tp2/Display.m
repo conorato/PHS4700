@@ -1,6 +1,7 @@
 classdef Display
     methods(Static)
         function displayField()
+            clf;
             X = [0 0  120 120];
             Y = [0 90 90  0  ];
             Z = [0 0  0   0  ];
