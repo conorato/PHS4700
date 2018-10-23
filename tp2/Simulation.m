@@ -2,9 +2,9 @@ classdef Simulation
     methods(Static)
         function [lastPosition, nextPosition, lastVelocity, nextVelocity, time, brokenConstraint] = simulateTrajectory(ri, vi, wi, deltaT, time) 
             lastPosition =ri; nextPosition = ri; lastVelocity = vi; nextVelocity = vi;
-            while(true)
+            while (true)
                 brokenConstraint = Constraints.getBrokenConstraint(nextPosition);
-                if(brokenConstraint ~= Constraints.None)
+                if (brokenConstraint ~= Constraints.None)
                     break;
                 end
                 Display.drawLine(lastPosition, nextPosition);
@@ -20,12 +20,12 @@ classdef Simulation
             deltaT = Constants.DELTA_T;
             while(deltaT > 0)
                 lastTime = time - deltaT;
-                if(Simulation.isPositionValid(lastPosition, brokenConstraint))
+                if (Simulation.isPositionValid(lastPosition, brokenConstraint))
                     position = lastPosition;
                     time = lastTime;
                     velocity = lastVelocity;
                     break
-                elseif(Simulation.isPositionValid(nextPosition, brokenConstraint))
+                elseif (Simulation.isPositionValid(nextPosition, brokenConstraint))
                     position = nextPosition;
                     velocity = nextVelocity;
                     break
@@ -36,22 +36,27 @@ classdef Simulation
         end
         
         function isPositionValid = isPositionValid(position, brokenConstraint)
-            if(brokenConstraint == Constraints.Ground)
-                isPositionValid = abs(position(3) - Constants.MIN_Z) < Constants.MAX_ERROR;
-            elseif(brokenConstraint == Constraints.FreeThrow)
-                if position(2) > Constants.MAX_Y/2; reference = Constants.MAX_Y; else; reference = Constants.MIN_Y; end
-                isPositionValid = abs(position(2) - reference) < Constants.MAX_ERROR;
-            elseif(brokenConstraint == Constraints.Goal || brokenConstraint == Constraints.GoalKick)
-                if position(1) > Constants.MAX_X/2; reference = Constants.MAX_X; else; reference = Constants.MIN_X; end
-                isPositionValid = abs(position(1) - reference) < Constants.MAX_ERROR;
-            elseif(brokenConstraint == Constraints.TouchesVerticalPost)
-                verticalPosts = Helper.getVerticalPosts(position);
-                if position(2) > Constants.MAX_Y/2; reference = verticalPosts(:,2); else; reference = verticalPosts(:,1); end
-                isPositionValid = (Helper.getDistance(position(1), reference(1), position(2), reference(2)) - Constants.BALL_RADIUS) < Constants.MAX_ERROR;
-            elseif(brokenConstraint == Constraints.TouchesHorizontalPost)
-                if position(1) > Constants.MAX_X/2; referenceX = Constants.MAX_X; else; referenceX = Constants.MIN_X; end
-                isPositionValid = Helper.getDistance(position(1), referenceX, position(3), Constants.GOAL_HEIGHT) - 0.11 < Constants.MAX_ERROR;
-            end
+            X = 1; Y = 2; Z = 3;
+            switch brokenConstraint
+                case Constraints.Ground
+                    isPositionValid = abs(position(Z) - Constants.MIN_Z) < Constants.MAX_ERROR;
+                case Constraints.FreeThrow
+                    isPositionValid = abs(position(Y) - Constants.MIN_Y) < Constants.MAX_ERROR || abs(position(Y) - Constants.MAX_Y) < Constants.MAX_ERROR;
+                case Constraints.Goal
+                case Constraints.GoalKick
+                    isPositionValid = abs(position(X) - Constants.MIN_X) < Constants.MAX_ERROR || abs(position(X) - Constants.MAX_X) < Constants.MAX_ERROR;
+                case Constraints.TouchesVerticalPost
+                    verticalPosts = Helper.getVerticalPosts(position);
+                    d1 = Helper.getDistance(position(X), verticalPosts(1, X), position(Y), verticalPosts(1, Y));
+                    d2 = Helper.getDistance(position(X), verticalPosts(2, X), position(Y), verticalPosts(2, Y));
+                    isPositionValid = abs(d1 - Constants.BALL_RADIUS) < Constants.MAX_ERROR || abs(d2 - Constants.BALL_RADIUS) < Constants.MAX_ERROR;
+                case Constraints.TouchesHorizontalPost
+                    d1 = Helper.getDistance(position(X), Constants.MIN_X, position(Z), Constants.GOAL_HEIGHT);
+                    d2 = Helper.getDistance(position(X), Constants.MAX_X, position(Z), Constants.GOAL_HEIGHT);
+                    isPositionValid = abs(d1 - 0.11) < Constants.MAX_ERROR || abs(d2 - 0.11 < Constants.MAX_ERROR);
+                otherwise
+                    isPositionValid = false;
+            end    
         end
     end
 end
