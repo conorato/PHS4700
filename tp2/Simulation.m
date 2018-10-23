@@ -41,19 +41,18 @@ classdef Simulation
                 case Constraints.Ground
                     isPositionValid = abs(position(Z) - Constants.MIN_Z) < Constants.MAX_ERROR;
                 case Constraints.FreeThrow
-                    isPositionValid = abs(position(Y) - Constants.MIN_Y) < Constants.MAX_ERROR || abs(position(Y) - Constants.MAX_Y) < Constants.MAX_ERROR;
-                case Constraints.Goal
-                case Constraints.GoalKick
+                    isPositionValid = abs(position(Y) - Constants.MIN_Y) < Constants.MAX_ERROR || abs(position(Y) - Constants.MAX_Y) < Constants.MAX_ERROR;                    
+                case {Constraints.GoalKick, Constraints.Goal}
                     isPositionValid = abs(position(X) - Constants.MIN_X) < Constants.MAX_ERROR || abs(position(X) - Constants.MAX_X) < Constants.MAX_ERROR;
                 case Constraints.TouchesVerticalPost
                     verticalPosts = Helper.getVerticalPosts(position);
-                    d1 = Helper.getDistance(position(X), verticalPosts(1, X), position(Y), verticalPosts(1, Y));
-                    d2 = Helper.getDistance(position(X), verticalPosts(2, X), position(Y), verticalPosts(2, Y));
+                    d1 = Helper.getDistance(position(X), verticalPosts(X, 1), position(Y), verticalPosts(Y, 1));
+                    d2 = Helper.getDistance(position(X), verticalPosts(X, 2), position(Y), verticalPosts(Y, 2));
                     isPositionValid = abs(d1 - Constants.BALL_RADIUS) < Constants.MAX_ERROR || abs(d2 - Constants.BALL_RADIUS) < Constants.MAX_ERROR;
                 case Constraints.TouchesHorizontalPost
                     d1 = Helper.getDistance(position(X), Constants.MIN_X, position(Z), Constants.GOAL_HEIGHT);
                     d2 = Helper.getDistance(position(X), Constants.MAX_X, position(Z), Constants.GOAL_HEIGHT);
-                    isPositionValid = abs(d1 - 0.11) < Constants.MAX_ERROR || abs(d2 - 0.11 < Constants.MAX_ERROR);
+                    isPositionValid = abs(d1 - Constants.BALL_RADIUS) < Constants.MAX_ERROR || abs(d2 - Constants.BALL_RADIUS) < Constants.MAX_ERROR;
                 otherwise
                     isPositionValid = false;
             end    
