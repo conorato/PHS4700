@@ -8,7 +8,9 @@ classdef Constants
         AIR_DENSITY     = 1.2754                            % [kg/m^2]
         AIR_VISCOSITY   = 1.8e-5                            % [kg/(m*s)]
         
-        DELTA_T         = 1/60;                             % [1/s]
+        DELTA_T         = 1/60;                             % [s]
+        
+        MAX_ERROR       = 0.001                             % [m]
         
         % constraints
  

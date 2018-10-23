@@ -1,4 +1,4 @@
-function position = getPosition( ri, vi)
-    position = ri + vi * Constants.DELTA_T;
+function position = getPosition( ri, vi, deltaT)
+    position = ri + vi * deltaT;
 end
 
