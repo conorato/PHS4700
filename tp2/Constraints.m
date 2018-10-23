@@ -26,5 +26,17 @@ classdef Constraints
                 brokenConstraint = Constraints.GoalKick;
             end
         end
+        
+        function output = convertConstraint(constraint)
+            if(constraint == Constraints.Goal)
+                output = 1;
+            elseif(constraint == Constraints.Ground)
+                output = 0;
+            elseif(constraint == Constraints.TouchesVerticalPost || constraint == Constraints.TouchesHorizontalPost)
+                output = -1;
+            elseif(constraint == Constraints.GoalKick || constraint == Constraints.FreeThrow)
+                output = -2;
+            end
+        end
     end
 end

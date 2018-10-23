@@ -6,8 +6,8 @@ function [ But, tf, rf, vf ] = Devoir2( ri, vi, wi )
         tf = time
         rf = ri
         vf = vi
-        But = brokenConstraint
     else
-        [rf, vf, tf, But] = Simulation.correctError(lastPosition, nextPosition, lastVelocity, nextVelocity, time, wi, brokenConstraint)
+        [rf, vf, tf, brokenConstraint] = Simulation.correctError(lastPosition, nextPosition, lastVelocity, nextVelocity, time, wi, brokenConstraint)
     end
+    But = Constraints.convertConstraint(brokenConstraint)
 end
