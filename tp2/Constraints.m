@@ -6,7 +6,7 @@ classdef Constraints
         Goal,
         TouchesVerticalPost,
         TouchesHorizontalPost,
-        IsGoalKick
+        GoalKick
     end
 
     methods(Static)
@@ -20,10 +20,11 @@ classdef Constraints
                 brokenConstraint = Constraints.Goal;
             elseif(Helper.touchesVerticalPost(position))
                 brokenConstraint = Constraints.TouchesVerticalPost;
+            elseif(Helper.touchesHorizontalPost(position))
+                brokenConstraint = Constraints.TouchesHorizontalPost;
             elseif(Helper.isGoalKick(position))
-                brokenConstraint = Constraints.IsGoalKick;
+                brokenConstraint = Constraints.GoalKick;
             end
-    
         end
     end
 end
