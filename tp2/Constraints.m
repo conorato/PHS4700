@@ -2,7 +2,11 @@ classdef Constraints
     enumeration
         None,
         Ground,
-        FreeThrow
+        FreeThrow,
+        Goal,
+        TouchesVerticalPost,
+        TouchesHorizontalPost,
+        IsGoalKick
     end
 
     methods(Static)
@@ -12,7 +16,14 @@ classdef Constraints
                 brokenConstraint = Constraints.Ground;
             elseif(Helper.isFreeThrow(position))
                 brokenConstraint = Constraints.FreeThrow;
+            elseif(Helper.isGoal(position))
+                brokenConstraint = Constraints.Goal;
+            elseif(Helper.touchesVerticalPost(position))
+                brokenConstraint = Constraints.TouchesVerticalPost;
+            elseif(Helper.isGoalKick(position))
+                brokenConstraint = Constraints.IsGoalKick;
             end
+    
         end
     end
 end

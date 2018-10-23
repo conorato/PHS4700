@@ -41,6 +41,16 @@ classdef Simulation
             elseif(brokenConstraint == Constraints.FreeThrow)
                 if position(2) > Constants.MAX_Y/2; reference = Constants.MAX_Y; else; reference = Constants.MIN_Y; end
                 isPositionValid = abs(position(2) - reference) < Constants.MAX_ERROR;
+            elseif(brokenConstraint == Constraints.Goal || brokenConstraint == Constraints.IsGoalKick)
+                if position(1) > Constants.MAX_X/2; reference = Constants.MAX_X; else; reference = Constants.MIN_X; end
+                isPositionValid = abs(position(1) - reference) < Constants.MAX_ERROR;
+            elseif(brokenConstraint == Constraints.TouchesVerticalPost)
+                verticalPosts = Helper.getVerticalPosts(position);
+                if position(2) > Constants.MAX_Y/2; reference = verticalPosts(2); else; reference = verticalPosts(1); end
+                isPositionValid = Helper.getDistance(position(1), reference(1), position(2), reference(2)) < Constants.MAX_ERROR;
+            elseif(brokenConstraint == Constraints.TouchesHorizontalPost)
+                if position(1) > Constants.MAX_X/2; referenceX = Constants.MAX_X; else; referenceX = Constants.MIN_X; end
+                isPositionValid = Helper.getDistance(position(1), referenceX, position(3), Constants.GOAL_HEIGHT) < Constants.MAX_ERROR;
             end
         end
     end
