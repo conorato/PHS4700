@@ -40,9 +40,7 @@ function [lastPosition, nextPosition, lastVelocity, nextVelocity, time] = simula
         if(areConstraintsBroken(nextPosition))
             break;
         end
-        if(exist('lastPosition', 'var'))
-            Display.drawLine(lastPosition, nextPosition);
-        end
+        Display.drawLine(lastPosition, nextPosition);
         lastPosition = nextPosition;
         lastVelocity = nextVelocity;
         nextVelocity = calculateNewVelocity(lastVelocity, wi, deltaT);
