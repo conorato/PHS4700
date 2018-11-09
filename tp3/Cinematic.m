@@ -1,7 +1,7 @@
 classdef Cinematic
     methods(Static)
         function gravitationForce = gravitationForce(mass)
-            gravitationForce = [0;0;-mass * Constants.GRAVITY];
+            gravitationForce = [0;0;-mass * Constants.GRAVITATIONAL_FORCE];
         end
         
         function dragForce = dragForce(velocity, area)
@@ -16,7 +16,7 @@ classdef Cinematic
                 mass = Constants.BALL_MASS;
                 area = pi * Constants.BALL_RADIUS ^ 2;
             end
-            acceleration = (gravitationForce(mass) + dragForce(velocity, area)) / mass;
+            acceleration = (Cinematic.gravitationForce(mass) + Cinematic.dragForce(velocity, area)) / mass;
         end
     end
 end
