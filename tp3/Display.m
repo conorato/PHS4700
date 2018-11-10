@@ -20,8 +20,13 @@ classdef Display
             hold on;
         end
 
-        function drawLine(from, to)
-            plot3([from(1) to(1)], [from(2) to(2)], [from(3) to(3)], '*', 'MarkerSize', 5);
+        function drawLine(from, to, gameObject)
+            if gameObject == GameObject.Ball 
+                char = 'p'; 
+            else
+                char = '*';
+            end
+            plot3([from(1) to(1)], [from(2) to(2)], [from(3) to(3)], char, 'MarkerSize', 5);
         end
     end
 end
