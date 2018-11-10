@@ -16,6 +16,6 @@ classdef Constants
         RESTITUTION_COEFFICIENT = 0.5;
         
         IDENTITY_QUATERNION     = [1; 0; 0; 0]; 
-        DELTA_T                 = 0.001;               %[s]
+        DELTA_T                 = 0.1;                  %[s]
     end
 end
