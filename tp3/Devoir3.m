@@ -1,4 +1,7 @@
 function [Coup tf vbaf vbof wbof rbaf rbof] = Devoir3(vbal, wboi, tl)
+[finalQCan, finalQBall] = rungeKutta(vbal, wboi, tl)
+
+
 Coup = 0;
 tf = 0;
 vbaf = [0 0 0; 0 0 0];

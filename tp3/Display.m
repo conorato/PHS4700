@@ -13,7 +13,7 @@ classdef Display
         
         function displayField()
             X = [0 0 6 6];
-            Y = [0 2 2 0];
+            Y = [-2 2 2 -2];
             Z = [0 0 0 0];
             darkGreen = [0.4 0.75 0.31];
             fill3(X, Y, Z, darkGreen);

@@ -11,7 +11,7 @@ function [qs m Err]=SEDRK4t0ER(q0,t0,tf,epsilon,g)
 %   g         : membre de droite de ED. 
 m=1;nbi=1;DeltaT=(tf-t0);
 % Solution avec m=1
-qs1=SEDRK4t0(q0,t0,DeltaT,'g');
+qs1=SEDRK4t0(q0,t0,DeltaT,g);
 [conv Err]=ErrSol(qs1,q0,epsilon);
 qs2=qs1;
 % Iteration avec m>1
@@ -20,7 +20,7 @@ while not(conv)
   m=m+1;nbi=nbi*2;
   qs2=q0;t2=t0;
   for i=1:nbi
-    qs2=SEDRK4t0(qs2,t2,DeltaT,'g');
+    qs2=SEDRK4t0(qs2,t2,DeltaT,g);
     t2=t2+DeltaT;
   end;
   [conv Err]=ErrSol(qs2,qs1,epsilon);

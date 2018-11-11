@@ -8,20 +8,23 @@ function [finalQCan, finalQBall] = rungeKutta(vbal, wboi, tl)
     t = 0;
     
     while(true)
-        qCanPrecedent = qCan;
-        qBallPrecedent = qBall;
-        qCan  = SEDRK4t0(qCan, t, Constants.DELTA_T, gCan)
-        qBall = SEDRK4t0(qBall, t, Constants.DELTA_T, gBall)
-        if( qCan(6) <= 0 )
+        qCanPrecedent = qCan
+        qBallPrecedent = qBall
+        qCan  = SEDRK4t0(qCan, t, Constants.DELTA_T, gCan);
+        if(t >= tl)
+            qBall = SEDRK4t0(qBall, t, Constants.DELTA_T, gBall);
+        end
+        if( qBall(6) <= 0 )
             break;
         end
-        t = Constants.DELTA_T + t;
         Display.drawLine(qCanPrecedent(4:6), qCan(4:6), GameObject.Can);
-        Display.drawLine(qBallPrecedent(4:6), qBall(4:6), GameObject.Ball);
+        if(t >= tl)
+            Display.drawLine(qBallPrecedent(4:6), qBall(4:6), GameObject.Ball);
+        end
+        t = Constants.DELTA_T + t;
     end
-    
-    finalQCan = qCan;
-    finalQBall = qBall;
+    finalQCan  = SEDRK4t0ER(qCanPrecedent, t, Constants.DELTA_T + t, Constants.EPSILON, gCan)
+    finalQBall = SEDRK4t0ER(qBallPrecedent, t, Constants.DELTA_T + t, Constants.EPSILON, gBall)
 end
 
 function vector = calculateGCan(q, t)
