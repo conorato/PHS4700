@@ -1,11 +1,9 @@
 function [Coup, tf, vbaf, vbof, wbof, rbaf, rbof] = Devoir3(vbal, wboi, tl)
     [finalQCan, finalQBall] = rungeKutta(vbal, wboi, tl);
-    vbaf = [finalQBall(1:3); finalQBall(1:3)];
-    vbof = [finalQCan(1:3); finalQCan(1:3)];
-
-    [vap,vbp,rap,rbp] = calculateContactPointSpeed(finalQCan, finalQBall);
+    [vap,vbp,rap,rbp] = Physics.calculateContactPointSpeed(finalQCan, finalQBall);
     brokenConstraint = CollisionDetector.getBrokenConstraint(finalQBall(4:6), finalQCan(4:6), finalQCan(10:13));
-    n = calculateN(finalQBall(4:6), brokenConstraint);
+    contactPoint = CollisionDetector.getContactPoint(brokenConstraint, finalQBall(4:6), finalQCan(4:6), finalQCan(10:13))
+    n = Physics.calculateN(finalQBall(4:6), contactPoint)
     
     %matrice d'inertie
     Iball = [2/3 * Constants.BALL_MASS*Constants.BALL_RADIUS^2, 0, 0;
@@ -23,21 +21,29 @@ function [Coup, tf, vbaf, vbof, wbof, rbaf, rbof] = Devoir3(vbal, wboi, tl)
     vr = dot(n, (vap-vbp));
 
     %calcul de j:
-    j = -alpha(1+ Constants.RESTITUTION_COEFFICIENT)*vr;
+    j = -alpha *(1+ Constants.RESTITUTION_COEFFICIENT)*vr;
     
     %calcul de wfinal:
     wbof = wboi + j*inv(Ican)*cross(rbp,n);
     
-    %calcul des vitesses finales au point de contact:
-    vapf = vap + j*(n/Constants.BALL_MASS + cross(inv(Iball)*cross(rap,n),rap));
-    vbpf = vbp + j*(n/Constants.BALL_MASS + cross(inv(Ican)*cross(rbp,n),rbp));
-    
+    %calcul des vitesses finales:
+    if(brokenConstraint ~=Constraints.Ground)
+        vapf = vap + j*(n/Constants.BALL_MASS + cross(inv(Iball)*cross(rap,n),rap))
+        vbpf = vbp + j*(n/Constants.BALL_MASS + cross(inv(Ican)*cross(rbp,n),rbp))
+    else
+        vapf = finalQBall(1:3);
+        vbpf = finalQCan(1:3);
+    end
     %reste a trouver les vitesses du centre de masse: 
-    Coup = 0;
+    if(brokenConstraint ~= Constraints.Ground)
+       Coup = 1
+    else
+       Coup = 0
+    end
     tf = 0;
-    vbaf = [0 0 0; 0 0 0]';
-    vbof = [0 0 0; 0 0 0]';
-    rbaf = [0; 0; 0];
-    rbof = [0; 0; 0];
+    vbaf = [finalQBall(1:3); vapf]'
+    vbof = [finalQCan(1:3); vbpf]'
+    rbaf = [finalQBall(4:6)]
+    rbof = [finalQCan(4:6)]
 end
 
