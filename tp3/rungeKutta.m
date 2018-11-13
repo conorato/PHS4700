@@ -1,4 +1,4 @@
-function [finalQCan, finalQBall] = rungeKutta(vbal, wboi, tl)
+function [finalQCan, finalQBall, brokenConstraint] = rungeKutta(vbal, wboi, tl)
     Display.init();    
     
     qCan    = [Constants.CAN_INITIAL_VELOCITY; Constants.CAN_INITIAL_POSITION; wboi; Constants.IDENTITY_QUATERNION];
@@ -12,8 +12,9 @@ function [finalQCan, finalQBall] = rungeKutta(vbal, wboi, tl)
         stepDistance = stepDistance / 10;
         deltaT = getDeltaT(stepDistance, norm(vbal));
     end
-    finalQCan = qCan
-    finalQBall = qBall
+    finalQCan = qCan;
+    finalQBall = qBall;
+    brokenConstraint = constraint;
 end
 
 function vector = gCan(q, t)
@@ -47,7 +48,7 @@ function [qCan, qBall, t, conv, constraint] = simulate(qBall, qCan, t, tl, delta
     while(true)
         brokenConstraint = CollisionDetector.getBrokenConstraint(qBall(4:6), qCan(4:6), qCan(10:13));
         if (brokenConstraint ~= Constraints.None)
-            constraint = brokenConstraint
+            constraint = brokenConstraint;
             break;
         end
         if(qCan(6) > 0 && qBall(6)> 0 && t > tl && qBall(4) < 3.3)

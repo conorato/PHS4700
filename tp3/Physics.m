@@ -1,10 +1,9 @@
 classdef Physics
     methods(Static)
-        function [vap,vbp, rap, rbp] = calculateContactPointSpeed(finalQCan, finalQBall)
+        function [vap,vbp, rap, rbp] = calculateContactPointSpeed(brokenConstraint, finalQCan, finalQBall)
             ballPos = finalQBall(4:6);
             canPos = finalQCan(4:6);
-            brokenConstraint = CollisionDetector.getBrokenConstraint(ballPos, canPos, finalQCan(10:13));
-            if(brokenConstraint ~= Constraints.Ground)
+            if (brokenConstraint ~= Constraints.Ground)
                 vap = finalQBall(1:3);
                 rap = finalQBall(4:6) - CollisionDetector.getContactPoint(brokenConstraint, ballPos, canPos, finalQCan(10:13));
                 rbp = finalQCan(4:6) - CollisionDetector.getContactPoint(brokenConstraint, ballPos, canPos, finalQCan(10:13));
@@ -13,7 +12,7 @@ classdef Physics
         end
 
         function n = calculateN(ballPos, contactPoint)
-            n = (ballPos - contactPoint)/norm(ballPos - contactPoint)
+            n = (ballPos - contactPoint)/norm(ballPos - contactPoint);
         end
     end
 end
