@@ -7,15 +7,15 @@ classdef CollisionDetector
                 case Constraints.CanSide
                     output = CollisionDetector.calculateSideContactPoint(ballPos);
                 case Constraints.CanTopFace
-                    output = [ballPosInNewRef(1:2),  Constants.CAN_HEIGHT / 2];
+                    output = [ballPosInNewRef(1:2);  Constants.CAN_HEIGHT / 2];
                 case Constraints.CanBottomFace
-                    output = [ballPosInNewRef(1:2), -Constants.CAN_HEIGHT / 2];
+                    output = [ballPosInNewRef(1:2); -Constants.CAN_HEIGHT / 2];
                 case Constraints.CanTopCorner
                     xy = CollisionDetector.calculateSideContactPoint(ballPos);
-                    output = [xy(1:2),  Constants.CAN_HEIGHT / 2];
+                    output = [xy(1:2);  Constants.CAN_HEIGHT / 2];
                 case Constraints.CanBottomCorner
                     xy = CollisionDetector.calculateSideContactPoint(ballPos);
-                    output = [xy(1:2), -Constants.CAN_HEIGHT / 2];
+                    output = [xy(1:2); -Constants.CAN_HEIGHT / 2];
                 otherwise
                     % invalid constraint
                     output = ballPos;
@@ -91,7 +91,7 @@ classdef CollisionDetector
         function output = calculateSideContactPoint(ballPos)
             distanceFactor = Constants.CAN_RADIUS / Helper.distance(ballPos(1), ballPos(2), 0, 0);
 
-            output = [ballPos(1) * distanceFactor, ballPos(2) * distanceFactor, ballPos(3)];
+            output = [ballPos(1) * distanceFactor; ballPos(2) * distanceFactor; ballPos(3)];
         end
 
         function output = invertQuaternion(q)
