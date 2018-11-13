@@ -14,8 +14,6 @@ function [finalQCan, finalQBall] = rungeKutta(vbal, wboi, tl)
     end
     finalQCan = qCan
     finalQBall = qBall
-    
-    CollisionDetector.getContactPoint(constraint, finalQBall(4:6), finalQCan(4:6), finalQCan(10:13));
 end
 
 function vector = gCan(q, t)

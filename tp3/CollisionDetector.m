@@ -1,25 +1,27 @@
 classdef CollisionDetector 
     methods(Static)
-    
         function output = getContactPoint(constraint, ballPos, canPos, canQuaternion)
             ballPosInNewRef = CollisionDetector.transformPositionToLocalSpace(ballPos, canPos, canQuaternion);
             switch(constraint)
                 case Constraints.CanSide
-                    output = CollisionDetector.calculateSideContactPoint(ballPos);
+                    contactPoint = CollisionDetector.calculateSideContactPoint(ballPos);
                 case Constraints.CanTopFace
-                    output = [ballPosInNewRef(1:2);  Constants.CAN_HEIGHT / 2];
+                    contactPoint = [ballPosInNewRef(1:2);  Constants.CAN_HEIGHT / 2];
                 case Constraints.CanBottomFace
-                    output = [ballPosInNewRef(1:2); -Constants.CAN_HEIGHT / 2];
+                    contactPoint = [ballPosInNewRef(1:2); -Constants.CAN_HEIGHT / 2];
                 case Constraints.CanTopCorner
                     xy = CollisionDetector.calculateSideContactPoint(ballPos);
-                    output = [xy(1:2);  Constants.CAN_HEIGHT / 2];
+                    contactPoint = [xy(1:2);  Constants.CAN_HEIGHT / 2];
                 case Constraints.CanBottomCorner
                     xy = CollisionDetector.calculateSideContactPoint(ballPos);
-                    output = [xy(1:2); -Constants.CAN_HEIGHT / 2];
+                    contactPoint = [xy(1:2); -Constants.CAN_HEIGHT / 2];
                 otherwise
                     % invalid constraint
-                    output = ballPos;
+                    contactPoint = ballPosInNewRef;
             end
+            contactPoint = transpose(QRotation(transpose(canQuaternion), transpose([0; contactPoint])));
+            output = contactPoint(2:4) + canPos;
+
         end
 
         function output = getBrokenConstraint(ballPos, canPos, canQuaternion)
