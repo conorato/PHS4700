@@ -89,7 +89,7 @@ classdef CollisionDetector
         end
 
         function output = calculateSideContactPoint(ballPos)
-            distanceFactor = distance(ballPos(1), ballPos(2), 0, 0) / Constants.CAN_RADIUS;
+            distanceFactor = Constants.CAN_RADIUS / distance(ballPos(1), ballPos(2), 0, 0);
 
             output = [ballPos(1) * distanceFactor, ballPos(2) * distanceFactor, ballPos(3)];
         end
