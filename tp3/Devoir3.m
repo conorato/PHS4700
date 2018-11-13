@@ -1,6 +1,8 @@
 function [Coup, tf, vbaf, vbof, wbof, rbaf, rbof] = Devoir3(vbal, wboi, tl)
     [finalQCan, finalQBall, brokenConstraint, tf] = rungeKutta(vbal, wboi, tl);
     [vap,vbp,rap,rbp] = Physics.calculateContactPointSpeed(brokenConstraint, finalQCan, finalQBall);
+    contactPoint = CollisionDetector.getContactPoint(brokenConstraint, finalQBall(4:6), finalQCan(4:6), finalQCan(10:13));
+    n = Physics.calculateN(finalQBall(4:6), contactPoint);
     
     if(brokenConstraint ~=Constraints.Ground)
         contactPoint = CollisionDetector.getContactPoint(brokenConstraint, finalQBall(4:6), finalQCan(4:6), finalQCan(10:13))
