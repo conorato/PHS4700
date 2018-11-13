@@ -4,16 +4,16 @@ classdef CollisionDetector
             ballPosInNewRef = CollisionDetector.transformPositionToLocalSpace(ballPos, canPos, canQuaternion);
             switch(constraint)
                 case Constraints.CanSide
-                    contactPoint = CollisionDetector.calculateSideContactPoint(ballPos);
+                    contactPoint = CollisionDetector.calculateSideContactPoint(ballPosInNewRef);
                 case Constraints.CanTopFace
                     contactPoint = [ballPosInNewRef(1:2);  Constants.CAN_HEIGHT / 2];
                 case Constraints.CanBottomFace
                     contactPoint = [ballPosInNewRef(1:2); -Constants.CAN_HEIGHT / 2];
                 case Constraints.CanTopCorner
-                    xy = CollisionDetector.calculateSideContactPoint(ballPos);
+                    xy = CollisionDetector.calculateSideContactPoint(ballPosInNewRef);
                     contactPoint = [xy(1:2);  Constants.CAN_HEIGHT / 2];
                 case Constraints.CanBottomCorner
-                    xy = CollisionDetector.calculateSideContactPoint(ballPos);
+                    xy = CollisionDetector.calculateSideContactPoint(ballPosInNewRef);
                     contactPoint = [xy(1:2); -Constants.CAN_HEIGHT / 2];
                 otherwise
                     % invalid constraint
