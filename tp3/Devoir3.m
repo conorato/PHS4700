@@ -1,8 +1,8 @@
 function [Coup, tf, vbaf, vbof, wbof, rbaf, rbof] = Devoir3(vbal, wboi, tl)
     [finalQCan, finalQBall, brokenConstraint, tf] = rungeKutta(vbal, wboi, tl);
     [vap,vbp,rap,rbp] = Physics.calculateContactPointSpeed(brokenConstraint, finalQCan, finalQBall);
-    contactPoint = CollisionDetector.getContactPoint(brokenConstraint, finalQBall(4:6), finalQCan(4:6), finalQCan(10:13))
-    n = Physics.calculateN(finalQBall(4:6), contactPoint)
+    contactPoint = CollisionDetector.getContactPoint(brokenConstraint, finalQBall(4:6), finalQCan(4:6), finalQCan(10:13));
+    n = Physics.calculateN(finalQBall(4:6), contactPoint);
     
     %matrice d'inertie
     Iball = [2/3 * Constants.BALL_MASS*Constants.BALL_RADIUS^2, 0, 0;
