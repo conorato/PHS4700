@@ -1,5 +1,26 @@
 classdef CollisionDetector 
     methods(Static)
+    
+        function output = getContactPoint(constraint, ballPos, canPos, canQuaternion)
+            ballPosInNewRef = CollisionDetector.transformPositionToLocalSpace(ballPos, canPos, canQuaternion);
+            switch(constraint)
+                case Constraints.CanSide
+                    output = CollisionDetector.calculateSideContactPoint(ballPos);
+                case Constraints.CanTopFace
+                    output = [ballPosInNewRef(1:2),  Constants.CAN_HEIGHT / 2];
+                case Constraints.CanBottomFace
+                    output = [ballPosInNewRef(1:2), -Constants.CAN_HEIGHT / 2];
+                case Constraints.CanTopCorner
+                    xy = CollisionDetector.calculateSideContactPoint(ballPos);
+                    output = [xy(1:2),  Constants.CAN_HEIGHT / 2];
+                case Constraints.CanBottomCorner
+                    xy = CollisionDetector.calculateSideContactPoint(ballPos);
+                    output = [xy(1:2), -Constants.CAN_HEIGHT / 2];
+                otherwise:
+                    % invalid constraint
+                    output = -1;
+        end
+
         function output = getBrokenConstraint(ballPos, canPos, canQuaternion)
             ballPosInNewRef = CollisionDetector.transformPositionToLocalSpace(ballPos, canPos, canQuaternion);
             output = Constraints.None;
@@ -25,7 +46,7 @@ classdef CollisionDetector
         function output = touchesCanSide(ballPos)
             output = (-Constants.CAN_HEIGHT/2 < ballPos(3) && ...
                 ballPos(3) < Constants.CAN_HEIGHT/2) && ... 
-                distance(ballPos(1), ballPos(2),0 ,0) <= Constants.BALL_RADIUS + Constants.CAN_RADIUS;
+                distance(ballPos(1), ballPos(2), 0, 0) <= Constants.BALL_RADIUS + Constants.CAN_RADIUS;
         end
         
         function output = touchesCanTopFace(ballPos)
@@ -64,6 +85,12 @@ classdef CollisionDetector
             % ball position in can's local space.
             pos = transpose(QRotation(transpose(invertedQuaternion), [0 transpose(pos)]));
             output = pos(2:4);
+        end
+
+        function output = calculateSideContactPoint(ballPos)
+            distanceFactor = distance(ballPos(1), ballPos(2), 0, 0) / Constants.CAN_RADIUS;
+
+            output = [ballPos(1) * distanceFactor, ballPos(2) * distanceFactor, ballPos(3)];
         end
 
         function output = invertQuaternion(q)
