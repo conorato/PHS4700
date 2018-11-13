@@ -1,4 +1,4 @@
-function [finalQCan, finalQBall, brokenConstraint] = rungeKutta(vbal, wboi, tl)
+function [finalQCan, finalQBall, brokenConstraint, tf] = rungeKutta(vbal, wboi, tl)
     Display.init();    
     
     qCan    = [Constants.CAN_INITIAL_VELOCITY; Constants.CAN_INITIAL_POSITION; wboi; Constants.IDENTITY_QUATERNION];
@@ -15,6 +15,7 @@ function [finalQCan, finalQBall, brokenConstraint] = rungeKutta(vbal, wboi, tl)
     finalQCan = qCan;
     finalQBall = qBall;
     brokenConstraint = constraint;
+    tf = t;
 end
 
 function vector = gCan(q, t)
