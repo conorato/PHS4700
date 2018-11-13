@@ -18,7 +18,7 @@ classdef Constants
         RESTITUTION_COEFFICIENT = 0.5;
         
         IDENTITY_QUATERNION     = [1; 0; 0; 0]; 
-        INITIAL_STEP_DISTANCE   = 0.02;                     %[m]
+        INITIAL_STEP_DISTANCE   = 0.1;                     %[m]
         EPSILON                 = [0.001, 0.001, 0.001];    %[m]
     end
 end
