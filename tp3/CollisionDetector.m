@@ -18,7 +18,7 @@ classdef CollisionDetector
                     output = [xy(1:2), -Constants.CAN_HEIGHT / 2];
                 otherwise
                     % invalid constraint
-                    output = -1;
+                    output = ballPos;
             end
         end
 
