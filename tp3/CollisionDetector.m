@@ -16,9 +16,10 @@ classdef CollisionDetector
                 case Constraints.CanBottomCorner
                     xy = CollisionDetector.calculateSideContactPoint(ballPos);
                     output = [xy(1:2), -Constants.CAN_HEIGHT / 2];
-                otherwise:
+                otherwise
                     % invalid constraint
                     output = -1;
+            end
         end
 
         function output = getBrokenConstraint(ballPos, canPos, canQuaternion)
