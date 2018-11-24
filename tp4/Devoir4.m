@@ -1,7 +1,7 @@
 function [tps fTrain Itrain] = Devoir4(vtrainkmh,fAvion)
     fTrain = [];
     ITrain = [];
-    vtrainms = Utilities.convertKmPerHToMPerS(vtrainkmh);
+    vtrainms = Utilities.kphToMps(vtrainkmh);
     tps = findTimeAtCollision(vtrainms, Constants.TRAIN_INITIAL_POSITION);
     time = tps;
     planePosition = [0; 0; 0];
@@ -12,7 +12,7 @@ function [tps fTrain Itrain] = Devoir4(vtrainkmh,fAvion)
         intensity = Utilities.getSoundIntensityLevel(trainPosition, planePosition, fAvion);
         fTrain = [fTrain; frequency];
         ITrain = [ITrain; intensity];
-        if(intensity <= 20)
+        if (intensity <= 20)
             break;
         end
         planePosition = updatePosition(planePosition, Constants.PLANE_VELOCITY);
