@@ -9,7 +9,7 @@ classdef Utilities
         function receivedIntensity = getSoundIntensityLevel(trainPosition, planePosition, frequency)
             distance = norm(planePosition - trainPosition);
             viscosityCoefficient = (0.8 + 0.0041 * frequency)/1000;
-            receivedIntensity = Constants.INITIAL_INTENSITY_LVL - 20 * log(distance/Constants.DISTANCE_INIT_INTENSITY) ...
+            receivedIntensity = Constants.INITIAL_INTENSITY_LVL - 20 * log10(distance/Constants.DISTANCE_INIT_INTENSITY) ...
                                 - viscosityCoefficient * (distance - Constants.DISTANCE_INIT_INTENSITY);
         end
         
