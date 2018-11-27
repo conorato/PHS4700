@@ -1,9 +1,8 @@
-function [tps fTrain Itrain] = Devoir4(vtrainkmh,fAvion)
-    fTrain = [];
-    ITrain = [];
+function [tps ftrain Itrain] = Devoir4(vtrainkmh,fAvion)
     vtrainms = Utilities.kphToMps(vtrainkmh);
     tps = findTimeAtCollision(vtrainms, Constants.TRAIN_INITIAL_POSITION);
     time = tps;
+    [ftrain, Itrain] = fillWithZeros(time);
     planePosition = [0; 0; 0];
     planePosition = updatePosition(planePosition, Constants.PLANE_VELOCITY, time);
     while(true)
@@ -11,16 +10,19 @@ function [tps fTrain Itrain] = Devoir4(vtrainkmh,fAvion)
         u = Utilities.normalize(trainPosition - planePosition);
         frequency = Utilities.dopplerEffect(u, vtrainms, fAvion);
         intensity = Utilities.getSoundIntensityLevel(trainPosition, planePosition, fAvion);
-        fTrain = [fTrain; frequency];
-        ITrain = [ITrain; intensity];
+        ftrain = [ftrain; frequency];
+        Itrain = [Itrain; intensity];
         if (intensity <= 20)
             break;
         end
         planePosition = updatePosition(planePosition, Constants.PLANE_VELOCITY, 1);
         time = time + 1;
     end
-    fTrain
-    ITrain
+end
+
+function [ftrain, Itrain] = fillWithZeros(time)
+    ftrain = zeros(int32(time), 1);
+    Itrain = zeros(int32(time), 1);
 end
 
 function newPosition = updatePosition(position, velocity, deltaT)

@@ -36,6 +36,6 @@ for isimulation=1:NSimulations
   ylabel('I (dB)');
   print('-depsc2',FileNamesI{isimulation})
   fprintf(' %4.0f  &  %5.0f &  %8.2f &  %8.2f &  %5.0f &  %8.2f &  %8.2f  \\\\ \n',isimulation,tps,ftrain(ifirst),Itrain(ifirst),(nstep-1)/tfac,ftrain(nstep),Itrain(nstep));
-end;
+end
 fprintf('\\hline \n \\end{tabular}  \\end{center} \\end{table} \n \n \n');
 
