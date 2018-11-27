@@ -5,6 +5,7 @@ function [tps fTrain Itrain] = Devoir4(vtrainkmh,fAvion)
     tps = findTimeAtCollision(vtrainms, Constants.TRAIN_INITIAL_POSITION);
     time = tps;
     planePosition = [0; 0; 0];
+    planePosition = updatePosition(planePosition, Constants.PLANE_VELOCITY, time);
     while(true)
         trainPosition = getTrainPosition(time, vtrainms);
         u = Utilities.normalize(trainPosition - planePosition);
@@ -15,15 +16,15 @@ function [tps fTrain Itrain] = Devoir4(vtrainkmh,fAvion)
         if (intensity <= 20)
             break;
         end
-        planePosition = updatePosition(planePosition, Constants.PLANE_VELOCITY);
+        planePosition = updatePosition(planePosition, Constants.PLANE_VELOCITY, 1);
         time = time + 1;
     end
     fTrain
     ITrain
 end
 
-function newPosition = updatePosition(position, velocity)
-    newPosition = position + velocity;
+function newPosition = updatePosition(position, velocity, deltaT)
+    newPosition = position + velocity * deltaT;
 end
 
 function trainPosition = getTrainPosition(time, trainVelocity)
